@@ -1,0 +1,299 @@
+!! Introdução a Padrões de Projeto
+
+🧠 O que são padrões de projeto?
+. São soluções reutilizáveis para problemas comuns no desenvolvimento de software orientado a objetos.
+. Não são código pronto, e sim modelos/conceitos que guiam a estrutura do seu código.
+. Eles ajudam a deixar o sistema mais flexível, reutilizável, organizado e fácil de manter.
+
+📚 Origem:
+. Inspirados em arquitetura (Christopher Alexander).
+. Aplicados a software pelos “Gang of Four” (GoF): Gamma, Helm, Johnson e Vlissides.
+. Documentados no livro “Design Patterns: Elements of Reusable Object-Oriented Software” (1995).
+
+🧩 Padrões de Projeto ≠ Algoritmos:
+. Um algoritmo é uma sequência de passos.
+. Um padrão é uma estrutura mais genérica para organizar soluções.
+
+🎯 Benefícios:
+. Reutilização de soluções já testadas.
+. Facilitam a comunicação entre desenvolvedores.
+. Melhoram a manutenção, documentação e qualidade do código.
+. Evitam reinventar.
+
+🧱 Cada padrão tem 4 elementos essenciais:
+. Nome – Facilita a comunicação.
+. Problema – Quando e por que usar o padrão.
+. Solução – Como ele resolve o problema.
+. Consequências – Pontos positivos e negativos.
+
+🚨 Cuidados:
+. Não tente usar padrão só por usar.
+. Nem todo problema precisa de um padrão complexo. Às vezes, código simples é o ideal.
+
+!! Factory Method 
+
+🎯 O que é o Factory Method?
+. É um padrão criacional que define uma interface para criar objetos, mas permite que subclasses decidam qual classe instanciar.
+. Em vez de usar new direto no código, você chama um método fábrica (create() ou factoryMethod()) e decide qual objeto retornar.
+
+💬 Analogia:
+Imagina uma fábrica de transporte. Você pede um “meio de transporte” e ela pode te entregar um caminhão ou um navio, 
+dependendo da subclasse. Você só fala: “me dá um transporte”, sem se preocupar com o que vem.
+
+📦 Quando usar?
+. Quando você não sabe de antemão qual classe de objeto será necessária.
+. Quando você quer desacoplar o código do cliente da lógica de criação.
+. Quando o sistema precisa ser extensível com novos tipos de produtos.
+
+🧱 Estrutura:
+. Produto (interface) – ex: Transporte
+. Produtos concretos – Caminhão, Navio
+. Criador (classe base) – define o método fábrica.
+. Criadores concretos – cada um retorna um produto específico.
+
+interface Transporte {
+    void entregar();
+}
+
+class Caminhao implements Transporte {
+    public void entregar() {
+        System.out.println("Entrega por terra.");
+    }
+}
+
+class Navio implements Transporte {
+    public void entregar() {
+        System.out.println("Entrega por mar.");
+    }
+}
+
+abstract class Logistica {
+    public abstract Transporte criarTransporte();
+}
+
+class LogisticaRodoviaria extends Logistica {
+    public Transporte criarTransporte() {
+        return new Caminhao();
+    }
+}
+
+class LogisticaMaritima extends Logistica {
+    public Transporte criarTransporte() {
+        return new Navio();
+    }
+}
+
+✅ Vantagens:
+. Princípio Aberto/Fechado: pode adicionar novos tipos de produtos sem alterar o código existente.
+. Responsabilidade única: separa a lógica de criação da lógica de uso.
+. Diminui o acoplamento com classes concretas.
+
+⚠️ Desvantagens:
+. Introduz muito mais classes e interfaces no projeto.
+. Pode parecer complexo em casos mais simples.
+
+!! Abstract Factory
+
+🎯 O que é?
+. É um padrão criacional que cria famílias de objetos relacionados entre si sem depender das classes concretas.
+. Ao invés de instanciar diretamente (new), você chama uma fábrica abstrata que fornece os objetos corretos de acordo com o “tema”.
+
+💬 Analogia:
+Imagina que você tá montando um tema de RPG.
+Você pode escolher o “tema Heroico” ou “tema Maligno”, e cada um vem com seu Guerreiro, Mago e Arma próprios.
+Você só diz: "quero o tema Heroico" — e a fábrica já te dá o combo certo 🛡️✨
+
+📦 Quando usar?
+. Quando precisa criar vários objetos que dependem uns dos outros (famílias).
+. Quando quer garantir que todos os objetos criados são compatíveis entre si.
+. Ideal pra interfaces gráficas multiplataforma, RPGs, jogos, e-commerce, etc.
+
+🧱 Estrutura:
+// Interfaces dos produtos
+interface Guerreiro {
+    void atacar();
+}
+interface Mago {
+    void lançarMagia();
+}
+
+// Implementações heroicas
+class GuerreiroHeroico implements Guerreiro { ... }
+class MagoHeroico implements Mago { ... }
+
+// Implementações malignas
+class GuerreiroMalvado implements Guerreiro { ... }
+class MagoMalvado implements Mago { ... }
+
+// Fábrica abstrata
+interface FabricaPersonagem {
+    Guerreiro criarGuerreiro();
+    Mago criarMago();
+}
+
+// Fábricas concretas
+class FabricaHeroica implements FabricaPersonagem { ... }
+class FabricaMaligna implements FabricaPersonagem { ... }
+
+✅ Vantagens:
+. Garante consistência entre objetos relacionados.
+. Baixo acoplamento com as classes concretas.
+. Facilita a escalabilidade do sistema.
+
+⚠️ Desvantagens:
+. Adiciona complexidade com muitas interfaces e classes.
+. Se precisar de novos produtos, a fábrica também precisa ser alterada.
+
+!! Builder
+
+🎯 O que é?
+. O Builder é um padrão criacional que permite criar objetos complexos passo a passo.
+. Ele separa a construção de um objeto da sua representação final.
+
+💬 Analogia:
+Pensa numa pizzaria 🍕.
+Você tem uma classe PizzaBuilder que monta a pizza do seu jeito: primeiro a massa, depois o molho, aí o queijo, os toppings…
+No final, você chama build() e recebe sua pizza perfeita. Você monta do seu jeito, sem precisar criar tudo de uma vez num construtor gigante.
+
+📦 Quando usar?
+. Quando a criação de um objeto exige vários passos ou configurações.
+. Quando você quer evitar construtores enormes com mil parâmetros.
+. Quando você precisa de diferentes representações para o mesmo objeto (ex: carro esportivo vs SUV).
+
+🧱 Estrutura:
+// Produto final
+class Carro {
+    String motor;
+    String cor;
+    int portas;
+}
+
+// Builder
+interface CarroBuilder {
+    void construirMotor();
+    void construirCor();
+    void construirPortas();
+    Carro getResultado();
+}
+
+// Builder concreto
+class CarroEsportivoBuilder implements CarroBuilder { ... }
+class SUVBuilder implements CarroBuilder { ... }
+
+// Diretor (opcional)
+class Concessionaria {
+    public void construirCarro(CarroBuilder builder) {
+        builder.construirMotor();
+        builder.construirCor();
+        builder.construirPortas();
+    }
+}
+
+✅ Vantagens:
+. Código de criação modular e reutilizável.
+. Fácil de adicionar ou remover partes do objeto.
+. Ideal pra criar objetos imutáveis e com muitos atributos opcionais.
+
+⚠️ Desvantagens:
+. Pode ficar verboso (muitas classes/interfaces).
+. Às vezes é overkill pra objetos simples.
+
+Esse padrão é ótimo quando o objeto tem muitas “pecinhas” opcionais. E o mais legal é que você pode usar o mesmo processo de construção para diferentes tipos de resultados 😎
+
+!! Prototype 
+
+🎯 O que é?
+. O Prototype é um padrão criacional que permite criar novos objetos clonando objetos existentes.
+. Você cria um modelo (protótipo) e copia ele sempre que quiser um novo objeto parecido, mas com pequenas diferenças.
+
+💬 Analogia:
+Pensa num cardápio de pizzaria.
+Você tem uma pizza padrão “Calabresa” no cardápio. Quando o cliente pede, você clona aquela base e só muda o que ele quiser (sem cebola, borda recheada, etc).
+Você não precisa recriar a pizza do zero.
+
+📦 Quando usar?
+. Quando você quer evitar o new e reaproveitar configurações complexas de objetos.
+. Quando objetos têm muitas propriedades e seriam difíceis de inicializar do zero.
+. Quando você quer independência da classe concreta.
+
+🧱 Estrutura:
+interface Clonavel {
+    Clonavel clone();
+}
+
+class Pessoa implements Clonavel {
+    String nome;
+    int idade;
+
+    public Pessoa(String nome, int idade) {
+        this.nome = nome;
+        this.idade = idade;
+    }
+
+    public Clonavel clone() {
+        return new Pessoa(this.nome, this.idade);
+    }
+}
+java
+Copiar
+Editar
+Pessoa original = new Pessoa("Nat", 18);
+Pessoa copia = (Pessoa) original.clone();
+copia.nome = "nouveauromance";
+
+✅ Vantagens:
+. Evita recriar objetos complexos manualmente.
+. Funciona independente da linguagem (quase toda linguagem tem algo como .clone() ou cópia).
+. Permite criar novas variações com facilidade.
+
+⚠️ Desvantagens:
+. Clonagem pode ser complicada quando o objeto tem referências para outros objetos (profundidade da cópia: shallow x deep copy).
+. Precisa definir claramente o que significa “clonar” para cada objeto.
+. Esse padrão combina muito com sistemas onde você precisa gerar variações rápidas de um objeto-base, tipo RPGs, pedidos de e-commerce, editores gráficos, etc.
+
+!! Singleton
+
+🎯 O que é?
+. O Singleton garante que só exista uma única instância de uma classe e fornece um ponto global de acesso a ela.
+. Serve pra representar coisas únicas no sistema, como uma conexão com banco de dados, configurações globais, logs, etc.
+
+💬 Analogia:
+Imagina que seu sistema tem um só “presidente”. Não pode ter dois ao mesmo tempo, né?
+Então o Singleton diz: "só pode me instanciar uma vez, e todo mundo vai usar essa mesma instância."
+
+📦 Quando usar?
+. Quando só pode haver um objeto controlando uma coisa.
+. Quando vários lugares no sistema precisam acessar o mesmo recurso compartilhado.
+
+🧱 Estrutura:
+public class Presidente {
+    private static Presidente instancia;
+
+    private Presidente() {
+        // construtor privado pra impedir que criem novas instâncias
+    }
+
+    public static Presidente getInstancia() {
+        if (instancia == null) {
+            instancia = new Presidente();
+        }
+        return instancia;
+    }
+}
+java
+Copiar
+Editar
+Presidente p1 = Presidente.getInstancia();
+Presidente p2 = Presidente.getInstancia();
+
+System.out.println(p1 == p2); // true (mesma instância)
+
+✅ Vantagens:
+. Garante unicidade de instância.
+. Fornece um ponto central de acesso ao objeto.
+. Reduz uso de memória quando usado corretamente.
+
+⚠️ Desvantagens:
+. Pode violar o princípio da responsabilidade única.
+. Dificulta testes unitários (por causa do estado global).
+. Pode ser abusado e virar uma “gambiarra global” se usado à toa.

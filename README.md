@@ -1,7 +1,7 @@
 # Resuminho pra Prova 
 
 🧠 Um mini guia mental sobre os tópicos de **Padrões Criacionais**, **factoryMethod**, **abstractMethod**, **builderMethod**,
-**prototypeMethod** e **singletonMethod**
+**prototypeMethod** e **singletonMethod**.
 
 ## Índices (ordem de revisão):
 

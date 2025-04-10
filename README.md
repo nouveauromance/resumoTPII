@@ -6,8 +6,7 @@
 ## Índices (ordem de revisão):
 
 - [Resumo](#1-resumo)
-- [Roteiro](#2-roteiro)
-- [Flashcards](#3-flashcards)
+- [Flashcards](#2-flashcards)
 
 ## Autores
 

@@ -1,0 +1,65 @@
+🃏 Flashcards – Padrões Criacionais (GoF)
+
+
+🟣 1. O que é um padrão de projeto?
+- Uma solução reutilizável e comprovada para problemas comuns no design de software orientado a objetos.
+------------------------------------------------------------------------------------------------------------------------------
+
+🟣 2. Quais são os 5 padrões criacionais do catálogo GoF?
+- Factory Method, Abstract Factory, Builder, Prototype, Singleton.
+------------------------------------------------------------------------------------------------------------------------------
+
+🏭 Factory Method
+🟡 O que o padrão Factory Method faz?
+- Define uma interface para criar objetos, mas permite que subclasses escolham a classe concreta.
+
+🟡 Quando usar Factory Method?
+- Quando você quer que a criação do objeto dependa da subclasse, sem acoplamento com classes concretas.
+
+🟡 Qual o benefício principal do Factory Method?
+- Facilita a extensão com novos tipos de objetos sem alterar o código existente (aberto/fechado).
+------------------------------------------------------------------------------------------------------------------------------
+
+🎨 Abstract Factory
+🟢 Para que serve o Abstract Factory?
+- Criar famílias de objetos relacionados sem especificar as classes concretas.
+
+🟢 Quando usar Abstract Factory?
+- Quando você precisa de objetos que devem trabalhar juntos, como em sistemas multiplataforma.
+
+🟢 Exemplo clássico de Abstract Factory?
+- UI multiplataforma (botões e menus para Windows, Mac, Linux).
+------------------------------------------------------------------------------------------------------------------------------
+
+🧱 Builder
+🔵 O que o padrão Builder permite fazer?
+- Construir objetos complexos passo a passo, separando construção e representação.
+
+🔵 Quando usar Builder?
+- Quando um objeto possui muitos atributos opcionais ou precisa ser montado em etapas.
+
+🔵 Benefícios do Builder?
+- Evita construtores com mil parâmetros e melhora a legibilidade e manutenção.
+------------------------------------------------------------------------------------------------------------------------------
+
+🔁 Prototype
+🟠 Qual o objetivo do Prototype?
+- Criar novos objetos clonando objetos existentes.
+
+🟠 Quando usar Prototype?
+- Quando objetos são caros de criar ou você quer fazer cópias com pequenas variações.
+
+🟠 Clonagem no Prototype: shallow ou deep?
+- Pode ser ambos! Shallow copia referências, deep copia tudo.
+------------------------------------------------------------------------------------------------------------------------------ 
+
+🔒 Singleton
+🔴 O que o padrão Singleton garante?
+- Que só exista uma única instância de uma classe no sistema, acessível globalmente.
+
+🔴 Exemplos clássicos de uso do Singleton?
+- Log, conexão com banco, configurações globais, carrinho de compras.
+
+🔴 Problemas do Singleton?
+- Pode dificultar testes e causar acoplamento excessivo se mal usado.
+------------------------------------------------------------------------------------------------------------------------------

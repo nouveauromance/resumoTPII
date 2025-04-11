@@ -7,6 +7,7 @@
 
 - [Resumo](#1-resumo)
 - [Flashcards](#2-flashcards)
+- [Decoreba de Código](#3-decoreba)
 
 ## Autores
 
